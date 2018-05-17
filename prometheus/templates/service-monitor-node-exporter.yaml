@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: node-exporter
+  labels:
+{{ include "labels.stakater" . | indent 4 }}
+{{ include "labels.chart" . | indent 4 }}
+spec:
+  jobLabel: k8s-app
+  selector:
+    matchLabels:
+{{ include "labels.selector" . | indent 6 }}
+  namespaceSelector:
+    matchNames:
+    {{- range .Values.prometheus.smNodeExporter.namespaceSelector }}
+    - {{ . }}
+    {{- end }}
+  endpoints:
+  - port: http-metrics
+    interval: 30s
