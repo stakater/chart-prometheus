@@ -1,14 +1,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: prometheus
+  name: {{ template "name" . }}
   labels:
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
 spec:
   selector:
     matchLabels:
-{{ include "labels.selector" . | indent 6 }}
+      prometheus: k8s
   namespaceSelector:
     matchNames:
     {{- range .Values.prometheus.smPrometheus.namespaceSelector }}
@@ -16,4 +16,4 @@ spec:
     {{- end }}
   endpoints:
   - port: web
-    interval: 30s
+    interval: {{ .Values.prometheus.smPrometheus.interval }}

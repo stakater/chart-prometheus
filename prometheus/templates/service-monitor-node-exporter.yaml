@@ -9,7 +9,7 @@ spec:
   jobLabel: k8s-app
   selector:
     matchLabels:
-{{ include "labels.selector" . | indent 6 }}
+      k8s-app: node-exporter
   namespaceSelector:
     matchNames:
     {{- range .Values.prometheus.smNodeExporter.namespaceSelector }}
@@ -17,4 +17,4 @@ spec:
     {{- end }}
   endpoints:
   - port: http-metrics
-    interval: 30s
+    interval: {{ .Values.prometheus.smNodeExporter.interval }}

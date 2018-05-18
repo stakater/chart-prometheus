@@ -9,7 +9,7 @@ spec:
   jobLabel: k8s-app
   selector:
     matchLabels:
-{{ include "labels.selector" . | indent 6 }}
+      k8s-app: kube-state-metrics
   namespaceSelector:
     matchNames:
     {{- range .Values.prometheus.smNodeKubeStateMetrics.namespaceSelector }}

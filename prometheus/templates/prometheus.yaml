@@ -1,22 +1,26 @@
 apiVersion: monitoring.coreos.com/v1
-kind: {{ template "name" . }}
+kind: Prometheus
 metadata:
   annotations:
     configmap.fabric8.io/update-on-change: {{ template "name" . }}-k8s-rules
   name: k8s
   labels:
+    prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
 spec:
   replicas: {{ .Values.prometheus.prometheusK8s.replicas }}
   version: {{ .Values.prometheus.image.tag }}
-  externalUrl: http://127.0.0.1:9090
+  externalUrl: {{ .Values.prometheus.prometheusK8s.externalUrl }}
   serviceAccountName: {{ template "name" . }}-k8s
   serviceMonitorSelector:
     matchExpressions:
-    - {key: k8s-app, operator: Exists}
+    {{- range .Values.prometheus.prometheusK8s.serviceMonitorExpressions }}
+    - {{ . }}
+    {{- end }}
   ruleSelector:
     matchLabels:
+      prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
 {{ include "labels.selector" . | indent 6 }}
   nodeSelector:
     failure-domain.beta.kubernetes.io/zone: {{ .Values.prometheus.prometheusK8s.nodeSelectorZone }}

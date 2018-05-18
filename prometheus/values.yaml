@@ -7,12 +7,16 @@ prometheus:
   image:
     tag: v2.2.0-rc.0
   alertmanager:
+    interval: 30s
     namespaceSelector:
     - monitoring
   prometheusK8s:
+    prometheusLabel: k8s
     replicas: 2
     externalUrl: http://127.0.0.1:9090
     nodeSelectorZone: us-west-2a
+    serviceMonitorExpressions:
+      - "{key: k8s-app, operator: Exists}"
     retention: 168h
     resources:
       requests:
@@ -24,9 +28,11 @@ prometheus:
         requests:
           storage: 40Gi
   smPrometheus:
+    interval: 30s
     namespaceSelector:
     - monitoring
   smNodeExporter:
+    interval: 30s
     namespaceSelector:
     - monitoring
   smNodeKubelet:
@@ -39,6 +45,8 @@ prometheus:
     namespaceSelector:
     - kube-system
   service:
+    expose: "true"
+    prometheusLabel: k8s
     forceSslRedirect: "true"
     ingressClass: internal-ingress
     annotations:

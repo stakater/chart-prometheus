@@ -13,7 +13,7 @@ spec:
     honorLabels: true
   selector:
     matchLabels:
-{{ include "labels.selector" . | indent 6 }}
+      k8s-app: kubelet
   namespaceSelector:
     matchNames:
     {{- range .Values.prometheus.smNodeKubelet.namespaceSelector }}

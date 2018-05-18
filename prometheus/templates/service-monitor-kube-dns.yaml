@@ -14,7 +14,7 @@ spec:
     interval: 30s
   selector:
     matchLabels:
-{{ include "labels.selector" . | indent 6 }}
+      k8s-app: kube-dns
   namespaceSelector:
     matchNames:
     {{- range .Values.prometheus.smNodeKubeDNS.namespaceSelector }}

@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: prometheus-operator
+  name: {{ template "name" . }}-operator
   labels:
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
@@ -10,4 +10,4 @@ spec:
   - port: http
   selector:
     matchLabels:
-{{ include "labels.selector" . | indent 6 }}
+      k8s-app: prometheus-operator

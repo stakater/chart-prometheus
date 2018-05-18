@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-{{ include "labels.selector" . | indent 6 }}
+      alertmanager: main
   namespaceSelector:
     matchNames:
     {{- range .Values.prometheus.alertmanager.namespaceSelector }}
@@ -16,4 +16,4 @@ spec:
     {{- end }}
   endpoints:
   - port: web
-    interval: 30s
+    interval: {{ .Values.prometheus.alertmanager.interval }}
