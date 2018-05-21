@@ -1,0 +1,65 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  annotations:
+    configmap.fabric8.io/update-on-change: {{ template "name" . }}-k8s-rules
+  name: k8s
+  labels:
+    prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
+{{ include "labels.stakater" . | indent 4 }}
+{{ include "labels.chart" . | indent 4 }}
+spec:
+  replicas: {{ .Values.prometheus.prometheusK8s.replicas }}
+  version: {{ .Values.prometheus.image.tag }}
+  externalUrl: {{ .Values.prometheus.prometheusK8s.externalUrl }}
+  serviceAccountName: {{ template "name" . }}-k8s
+  serviceMonitorSelector:
+    matchExpressions:
+    {{- range .Values.prometheus.prometheusK8s.serviceMonitorExpressions }}
+    - {{ . }}
+    {{- end }}
+  ruleSelector:
+    matchLabels:
+      prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
+{{ include "labels.selector" . | indent 6 }}
+  nodeSelector:
+    failure-domain.beta.kubernetes.io/zone: {{ .Values.prometheus.prometheusK8s.nodeSelectorZone }}
+  {{- with .Values.prometheus.prometheusK8s.resources }}
+  resources:
+    {{- with .requests }}
+    requests:
+      {{- with .memory }}
+      memory: {{ . }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  retention: {{ .Values.prometheus.prometheusK8s.retention }}
+  storage:
+    class: {{ .Values.prometheus.prometheusK8s.storage.class }}
+    selector:
+    resources:
+    volumeClaimTemplate:
+      metadata:
+        annotations:
+          annotation1: {{ template "name" . }}
+          {{- with .Values.prometheus.prometheusK8s.storage.annotations }}
+          {{- range $key, $value := . }}
+          {{ $key }}: {{ $value }}
+          {{- end }}
+          {{- end }}
+      spec:
+        storageClassName: {{ .Values.prometheus.prometheusK8s.storage.class }}
+        {{- with .Values.prometheus.prometheusK8s.storage.resources }}
+        resources:
+          {{- with .requests }}
+          requests:
+            {{- with .storage }}
+            storage: {{ . }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+  alerting:
+    alertmanagers:
+    - namespace: {{ .Values.prometheus.namespace }}
+      name: alertmanager-main
+      port: web

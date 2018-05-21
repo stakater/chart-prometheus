@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: alertmanager
+  labels:
+{{ include "labels.stakater" . | indent 4 }}
+{{ include "labels.chart" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      alertmanager: main
+  namespaceSelector:
+    matchNames:
+    {{- range .Values.prometheus.alertmanager.namespaceSelector }}
+    - {{ . }}
+    {{- end }}
+  endpoints:
+  - port: web
+    interval: {{ .Values.prometheus.alertmanager.interval }}

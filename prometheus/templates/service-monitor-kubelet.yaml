@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kubelet
+  labels:
+{{ include "labels.stakater" . | indent 4 }}
+{{ include "labels.chart" . | indent 4 }}
+spec:
+  jobLabel: k8s-app
+  endpoints:
+  - port: cadvisor
+    interval: 30s
+    honorLabels: true
+  selector:
+    matchLabels:
+      k8s-app: kubelet
+  namespaceSelector:
+    matchNames:
+    {{- range .Values.prometheus.smNodeKubelet.namespaceSelector }}
+    - {{ . }}
+    {{- end }}

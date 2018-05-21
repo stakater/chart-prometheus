@@ -1,0 +1,11 @@
+apiVersion: v1
+name: prometheus
+description: prometheus chart that runs on kubernetes
+version: 1.0.0
+keywords:
+  - prometheus
+  - kubernetes
+home: https://github.com/stakater/chart-prometheus
+maintainers:
+- name: Stakater
+  email: stakater@aurorasolutions.io
