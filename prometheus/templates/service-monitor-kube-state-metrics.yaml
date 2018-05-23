@@ -3,6 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: kube-state-metrics
   labels:
+    k8s-app: kube-state-metrics
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
 spec:

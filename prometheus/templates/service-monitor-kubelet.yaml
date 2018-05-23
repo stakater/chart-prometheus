@@ -3,6 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: kubelet
   labels:
+    k8s-app: kubelet
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
 spec:

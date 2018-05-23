@@ -3,6 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: kube-dns
   labels:
+    k8s-app: kube-dns
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
 spec:

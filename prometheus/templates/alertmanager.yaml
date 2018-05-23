@@ -3,6 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: alertmanager
   labels:
+    k8s-app: alertmanager
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
 spec:
