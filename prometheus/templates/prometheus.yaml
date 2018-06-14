@@ -37,7 +37,7 @@ spec:
   {{- end }}
   retention: {{ .Values.prometheus.prometheusK8s.retention }}
   storage:
-    class: {{ .Release.Namespace }}-prometheus-ssd
+    class: {{ .Values.prometheus.prometheusK8s.storage.class }}
     selector:
     resources:
     volumeClaimTemplate:
@@ -50,7 +50,7 @@ spec:
           {{- end }}
           {{- end }}
       spec:
-        storageClassName: {{ .Release.Namespace }}-prometheus-ssd
+        storageClassName: {{ .Values.prometheus.prometheusK8s.storage.class }}
         {{- with .Values.prometheus.prometheusK8s.storage.resources }}
         resources:
           {{- with .requests }}
