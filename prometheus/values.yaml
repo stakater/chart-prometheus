@@ -32,13 +32,13 @@ prometheus:
     forceSslRedirect: "true"
     ingressClass: internal-ingress
     annotations:
-  storageclass:
-    isDefaultClass: "false"
-    provisioner: kubernetes.io/aws-ebs 
-    parameters:
-      zone: us-west-2a
-      type: gp2
-    annotations:
+  # storageclass:
+  #   isDefaultClass: "false"
+  #   provisioner: kubernetes.io/aws-ebs 
+  #   parameters:
+  #     zone: us-west-2a
+  #     type: gp2
+  #   annotations:
   configmap:
     data:
       alertmanager.rules: |+
