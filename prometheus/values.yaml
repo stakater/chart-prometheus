@@ -36,7 +36,7 @@ prometheus:
     isDefaultClass: "false"
     provisioner: kubernetes.io/aws-ebs 
     parameters:
-      zone: eu-west-1a
+      zone: us-west-2a
       type: gp2
     annotations:
   configmap:
