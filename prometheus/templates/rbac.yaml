@@ -5,7 +5,7 @@ metadata:
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
   name: {{ template "name" . }}-k8s
-  namespace: monitoring
+  namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
@@ -14,7 +14,7 @@ metadata:
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
   name: {{ template "name" . }}-k8s
-  namespace: monitoring
+  namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups: [""]
   resources:
@@ -82,7 +82,7 @@ metadata:
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
   name: {{ template "name" . }}-k8s
-  namespace: monitoring
+  namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -90,7 +90,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ template "name" . }}-k8s
-  namespace: monitoring
+  namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -107,7 +107,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ template "name" . }}-k8s
-  namespace: {{ .Values.prometheus.namespace }}
+  namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -124,7 +124,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ template "name" . }}-k8s
-  namespace: {{ .Values.prometheus.namespace }}
+  namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -140,4 +140,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ template "name" . }}-k8s
-  namespace: {{ .Values.prometheus.namespace }}
+  namespace: {{ .Release.Namespace }}

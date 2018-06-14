@@ -22,8 +22,10 @@ spec:
     matchLabels:
       prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
 {{ include "labels.selector" . | indent 6 }}
+  {{- if .Values.prometheus.prometheusK8s.nodeSelector }}  
   nodeSelector:
-    failure-domain.beta.kubernetes.io/zone: {{ .Values.prometheus.prometheusK8s.nodeSelectorZone }}
+    {{ .Values.prometheus.prometheusK8s.nodeSelector.key }}: {{ .Values.prometheus.prometheusK8s.nodeSelector.value }}
+  {{- end }}
   {{- with .Values.prometheus.prometheusK8s.resources }}
   resources:
     {{- with .requests }}
@@ -35,7 +37,7 @@ spec:
   {{- end }}
   retention: {{ .Values.prometheus.prometheusK8s.retention }}
   storage:
-    class: {{ .Values.prometheus.prometheusK8s.storage.class }}
+    class: {{ .Release.Namespace }}-prometheus-ssd
     selector:
     resources:
     volumeClaimTemplate:
@@ -48,7 +50,7 @@ spec:
           {{- end }}
           {{- end }}
       spec:
-        storageClassName: {{ .Values.prometheus.prometheusK8s.storage.class }}
+        storageClassName: {{ .Release.Namespace }}-prometheus-ssd
         {{- with .Values.prometheus.prometheusK8s.storage.resources }}
         resources:
           {{- with .requests }}
@@ -60,6 +62,6 @@ spec:
         {{- end }}
   alerting:
     alertmanagers:
-    - namespace: {{ .Values.prometheus.namespace }}
-      name: alertmanager-main
+    - namespace: {{ .Release.Namespace }}
+      name: {{ .Values.prometheus.alertmanager.name }}
       port: web
