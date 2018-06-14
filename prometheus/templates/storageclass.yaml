@@ -1,10 +1,11 @@
+{{- if .Values.prometheus.storageclass }}
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   labels:
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
-  name: {{ .Release.Namespace }}-prometheus-ssd
+  name: {{ .Values.prometheus.prometheusK8s.storage.class }}
   annotations:
     storageclass.beta.kubernetes.io/is-default-class: "{{ .Values.prometheus.storageclass.isDefaultClass }}"
     {{- with .Values.prometheus.storageclass.annotations }}
@@ -16,4 +17,5 @@ provisioner: {{ .Values.prometheus.storageclass.provisioner }}
 {{- with .Values.prometheus.storageclass }}
 parameters:
 {{ toYaml .parameters | indent 2 }}
+{{- end }}
 {{- end }}
