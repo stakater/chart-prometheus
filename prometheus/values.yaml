@@ -5,6 +5,8 @@ prometheus:
     version: 2.2.0-rc.0  
   image:
     tag: v2.2.0-rc.0  
+  alertmanager:
+    name: alertmanager-main
   prometheusK8s:
     prometheusLabel: k8s
     replicas: 2

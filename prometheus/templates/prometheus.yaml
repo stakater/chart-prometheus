@@ -37,7 +37,7 @@ spec:
   {{- end }}
   retention: {{ .Values.prometheus.prometheusK8s.retention }}
   storage:
-    class: {{ .Values.prometheus.prometheusK8s.storage.class }}
+    class: {{ .Release.Namespace }}-prometheus-ssd
     selector:
     resources:
     volumeClaimTemplate:
@@ -50,7 +50,7 @@ spec:
           {{- end }}
           {{- end }}
       spec:
-        storageClassName: {{ .Values.prometheus.prometheusK8s.storage.class }}
+        storageClassName: {{ .Release.Namespace }}-prometheus-ssd
         {{- with .Values.prometheus.prometheusK8s.storage.resources }}
         resources:
           {{- with .requests }}
@@ -63,5 +63,5 @@ spec:
   alerting:
     alertmanagers:
     - namespace: {{ .Release.Namespace }}
-      name: alertmanager-main
+      name: {{ .Values.prometheus.alertmanager.name }}
       port: web
