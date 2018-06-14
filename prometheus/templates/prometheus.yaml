@@ -22,8 +22,10 @@ spec:
     matchLabels:
       prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
 {{ include "labels.selector" . | indent 6 }}
+  {{- if .Values.prometheus.prometheusK8s.nodeSelector }}  
   nodeSelector:
-    failure-domain.beta.kubernetes.io/zone: {{ .Values.prometheus.prometheusK8s.nodeSelectorZone }}
+    {{ .Values.prometheus.prometheusK8s.nodeSelector.key }}: {{ .Values.prometheus.prometheusK8s.nodeSelector.value }}
+  {{- end }}
   {{- with .Values.prometheus.prometheusK8s.resources }}
   resources:
     {{- with .requests }}
@@ -60,6 +62,6 @@ spec:
         {{- end }}
   alerting:
     alertmanagers:
-    - namespace: {{ .Values.prometheus.namespace }}
+    - namespace: {{ .Release.Namespace }}
       name: alertmanager-main
       port: web

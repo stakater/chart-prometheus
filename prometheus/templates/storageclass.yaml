@@ -4,7 +4,7 @@ metadata:
   labels:
 {{ include "labels.stakater" . | indent 4 }}
 {{ include "labels.chart" . | indent 4 }}
-  name: ssd
+  name: {{ .ReleaseNamespace }}-prometheus-ssd
   annotations:
     storageclass.beta.kubernetes.io/is-default-class: "{{ .Values.prometheus.storageclass.isDefaultClass }}"
     {{- with .Values.prometheus.storageclass.annotations }}
@@ -12,7 +12,8 @@ metadata:
     {{ $key }}: {{ $value }}
     {{- end }}
     {{- end }}
-provisioner: kubernetes.io/aws-ebs
+provisioner: {{ .Values.prometheus.storageclass.provisioner }}
+{{- with .Values.prometheus.storageclass }}
 parameters:
-  zone: {{ .Values.prometheus.storageclass.zone }}
-  type: gp2
+{{ toYaml .parameters | indent 2 }}
+{{- end }}

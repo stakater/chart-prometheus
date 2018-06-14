@@ -2,19 +2,16 @@ prometheus:
   labels:
     group: com.stakater.platform
     provider: stakater
-    version: 2.2.0-rc.0
-  namespace: monitoring
+    version: 2.2.0-rc.0  
   image:
-    tag: v2.2.0-rc.0
-  alertmanager:
-    interval: 30s
-    namespaceSelector:
-    - monitoring
+    tag: v2.2.0-rc.0  
   prometheusK8s:
     prometheusLabel: k8s
     replicas: 2
     externalUrl: http://127.0.0.1:9090
-    nodeSelectorZone: eu-west-1a
+    nodeSelector:
+     key: failure-domain.beta.kubernetes.io/zone
+     value: eu-west-1a    
     serviceMonitorExpressions:
       - "{key: k8s-app, operator: Exists}"
     retention: 168h
@@ -27,23 +24,6 @@ prometheus:
       resources:
         requests:
           storage: 40Gi
-  smPrometheus:
-    interval: 30s
-    namespaceSelector:
-    - monitoring
-  smNodeExporter:
-    interval: 30s
-    namespaceSelector:
-    - monitoring
-  smNodeKubelet:
-    namespaceSelector:
-    - kube-system
-  smNodeKubeStateMetrics:
-    namespaceSelector:
-    - monitoring
-  smNodeKubeDNS:
-    namespaceSelector:
-    - kube-system
   service:
     expose: "true"
     prometheusLabel: k8s
@@ -52,7 +32,10 @@ prometheus:
     annotations:
   storageclass:
     isDefaultClass: "false"
-    zone: eu-west-1a
+    provisioner: kubernetes.io/aws-ebs 
+    parameters:
+      zone: eu-west-1a
+      type: gp2
     annotations:
   configmap:
     data:
