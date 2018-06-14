@@ -4,9 +4,9 @@ metadata:
   labels:
     prometheus: {{ .Values.prometheus.service.prometheusLabel }}
     expose: "{{ .Values.prometheus.service.expose }}"
-{{ include "labels.stakater" . | indent 4 }}
-{{ include "labels.chart" . | indent 4 }}
-  name: {{ template "name" . }}-k8s
+{{ include "prometheus.labels.stakater" . | indent 4 }}
+{{ include "prometheus.labels.chart" . | indent 4 }}
+  name: {{ template "prometheus.name" . }}-k8s
   annotations:
     fabric8.io/ingress.annotations: |-
       ingress.kubernetes.io/force-ssl-redirect: "{{ .Values.prometheus.service.forceSslRedirect }}"
@@ -19,4 +19,4 @@ spec:
     targetPort: web
   selector:
     prometheus: {{ .Values.prometheus.service.prometheusLabel }}
-{{ include "labels.selector" . | indent 4 }}
+{{ include "prometheus.labels.selector" . | indent 4 }}

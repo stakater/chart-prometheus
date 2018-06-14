@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "name" . }}-k8s-rules
+  name: {{ template "prometheus.name" . }}-k8s-rules
   namespace: {{ .Release.Namespace }}
   labels:
     role: prometheus-rulefiles
     prometheus: k8s
-{{ include "labels.stakater" . | indent 4 }}
-{{ include "labels.chart" . | indent 4 }}
+{{ include "prometheus.labels.stakater" . | indent 4 }}
+{{ include "prometheus.labels.chart" . | indent 4 }}
 data:
 {{ toYaml .Values.prometheus.configmap.data | indent 2}}
