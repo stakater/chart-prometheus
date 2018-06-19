@@ -6,12 +6,12 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.prometheus.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "monitoring.labels.selector-prom" -}}
+{{- define "prometheus.labels.selector" -}}
 app: {{ template "prometheus.name" . }}-prometheus
-{{ template "monitoring.prometheus.labels.groupAndProvider" . }}
+{{ template "prometheus.labels.groupAndProvider" . }}
 {{- end -}}
 
-{{- define "monitoring.prometheus.labels.groupAndProvider" -}}
+{{- define "prometheus.labels.groupAndProvider" -}}
 group: {{ .Values.prometheus.labels.group }}
 provider: {{ .Values.prometheus.labels.provider }}
 {{- end -}}
@@ -25,14 +25,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-#{{- define "prometheus.labels.selector" -}}
-#app: {{ template "prometheus.name" . }}
-#group: {{ .Values.prometheus.labels.group }}
-#provider: {{ .Values.prometheus.labels.provider }}
-#{{- end -}}
-
 {{- define "prometheus.labels.stakater" -}}
-{{ template "monitoring.labels.selector-prom" . }}
+{{ template "prometheus.labels.selector" . }}
 version: "{{ .Values.prometheus.labels.version }}"
 {{- end -}}
 
