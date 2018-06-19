@@ -9,12 +9,12 @@ prometheus:
   alertmanager:
     name: alertmanager-main
   prometheusK8s:
-    prometheusLabel: k8s
+    prometheusLabel: monitoring-k8s
     replicas: 2
     externalUrl: http://127.0.0.1:9090
     nodeSelector:
-     key: failure-domain.beta.kubernetes.io/zone
-     value: us-west-2a    
+      key: failure-domain.beta.kubernetes.io/zone
+      value: us-west-2a    
     serviceMonitorExpressions:
       - "{key: k8s-app, operator: Exists}"
     retention: 168h
@@ -29,7 +29,7 @@ prometheus:
           storage: 40Gi
   service:
     expose: "true"
-    prometheusLabel: k8s
+    prometheusLabel: monitoring-k8s
     forceSslRedirect: "true"
     ingressClass: internal-ingress
     annotations:
