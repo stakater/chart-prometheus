@@ -7,7 +7,7 @@ Expand the name of the chart.
 {{- end -}}
 
 {{- define "prometheus.labels.selector" -}}
-app: {{ template "prometheus.name" . }}-prometheus
+app: prometheus
 {{ template "prometheus.labels.groupAndProvider" . }}
 {{- end -}}
 

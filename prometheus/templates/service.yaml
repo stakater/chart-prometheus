@@ -6,7 +6,7 @@ metadata:
     expose: "{{ .Values.prometheus.service.expose }}"
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
-  name: {{ template "prometheus.name" . }}-k8s
+  name: {{ template "prometheus.name" . }}-prometheus-k8s
   annotations:
     fabric8.io/ingress.annotations: |-
       ingress.kubernetes.io/force-ssl-redirect: "{{ .Values.prometheus.service.forceSslRedirect }}"

@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     role: prometheus-rulefiles
-    prometheus: k8s
+    prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
 data:
