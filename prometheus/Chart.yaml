@@ -1,7 +1,7 @@
 apiVersion: v1
 name: prometheus
 description: prometheus chart that runs on kubernetes
-version: 1.0.7
+version: 1.0.8
 keywords:
   - prometheus
   - kubernetes
