@@ -1,4 +1,5 @@
 prometheus:
+  name: monitoring
   labels:
     group: com.stakater.platform
     provider: stakater
