@@ -205,13 +205,21 @@ prometheus:
         - name: pods.rules
           rules:
           - alert: PodsDown
-            expr: kube_pod_status_phase{phase!="Running"} == 1 and kube_pod_status_phase{phase!="Pending"} == 1
+            expr: kube_pod_info{created_by_kind!="Job"} == 1 and ON(pod) kube_pod_status_phase{phase!="Pending"} == 1 and ON(pod) kube_pod_status_ready{condition="false"} == 1
             for: 1s
             labels:
               severity: critical
             annotations:
               description: '{{ $labels.pod }} from {{ $labels.namespace }} is red.'
               summary: Pods are down
+          - alert: JobsFailed
+            expr: kube_pod_info{created_by_kind="Job"} == 1 and ON(pod) (kube_pod_status_phase{phase="Failed"} == 1 or kube_pod_status_phase{phase="Unknown"} == 1)
+            for: 1s
+            labels:
+              severity: critical
+            annotations:
+              description: '{{ $labels.pod }} from {{ $labels.namespace }} has failed.'
+              summary: Jobs failed
         - name: general.rules
           rules:
           - alert: TargetDown
