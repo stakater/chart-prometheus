@@ -8,6 +8,7 @@ prometheus:
     tag: v2.2.0-rc.0  
   alertmanager:
     name: alertmanager-main
+    namespace: monitoring
   prometheusK8s:
     prometheusLabel: monitoring-k8s
     replicas: 2
