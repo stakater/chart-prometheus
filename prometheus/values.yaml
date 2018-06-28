@@ -9,6 +9,7 @@ prometheus:
   alertmanager:
     name: alertmanager-main
     namespace: monitoring
+    # shouldRbacCreate: true     #If deploying prometheus and using alertmanager of other namespace so set this value to true
   prometheusK8s:
     prometheusLabel: monitoring-k8s
     replicas: 2
