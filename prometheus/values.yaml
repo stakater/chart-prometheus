@@ -29,6 +29,7 @@ prometheus:
       resources:
         requests:
           storage: 40Gi
+  clearSecurityContext: false
   service:
     expose: "true"
     prometheusLabel: monitoring-k8s

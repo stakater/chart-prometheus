@@ -12,7 +12,9 @@ spec:
   replicas: {{ .Values.prometheus.prometheusK8s.replicas }}
   version: {{ .Values.prometheus.image.tag }}
   externalUrl: {{ .Values.prometheus.prometheusK8s.externalUrl }}
+  {{- if .Values.prometheus.clearSecurityContext }}
   securityContext: {}
+  {{- end }}
   serviceAccountName: {{ template "prometheus.name" . }}-k8s
   serviceMonitorSelector:
     matchExpressions:
