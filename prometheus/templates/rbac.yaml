@@ -34,7 +34,7 @@ metadata:
   labels:
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
-  name: {{ template "prometheus.name" . }}-k8s
+  name: {{ template "prometheus.name" . }}-kube-system-k8s
   namespace: kube-system
 rules:
 - apiGroups: [""]
@@ -50,7 +50,7 @@ metadata:
   labels:
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
-  name: {{ template "prometheus.name" . }}-k8s
+  name: {{ template "prometheus.name" . }}-default-k8s
   namespace: default
 rules:
 - apiGroups: [""]
@@ -98,12 +98,12 @@ metadata:
   labels:
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
-  name: {{ template "prometheus.name" . }}-k8s
+  name: {{ template "prometheus.name" . }}-kube-system-k8s
   namespace: kube-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ template "prometheus.name" . }}-k8s
+  name: {{ template "prometheus.name" . }}-kube-system-k8s
 subjects:
 - kind: ServiceAccount
   name: {{ template "prometheus.name" . }}-k8s
@@ -115,12 +115,12 @@ metadata:
   labels:
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
-  name: {{ template "prometheus.name" . }}-k8s
+  name: {{ template "prometheus.name" . }}-default-k8s
   namespace: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ template "prometheus.name" . }}-k8s
+  name: {{ template "prometheus.name" . }}-default-k8s
 subjects:
 - kind: ServiceAccount
   name: {{ template "prometheus.name" . }}-k8s
