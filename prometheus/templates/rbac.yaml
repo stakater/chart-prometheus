@@ -147,6 +147,9 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
+  labels:
+{{ include "prometheus.labels.stakater" . | indent 4 }}
+{{ include "prometheus.labels.chart" . | indent 4 }}
   name: {{ .Release.Namespace }}-prometheus-rolebinding
   namespace: {{ .Values.prometheus.alertmanager.namespace }}
 roleRef:
@@ -161,6 +164,9 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
+  labels:
+{{ include "prometheus.labels.stakater" . | indent 4 }}
+{{ include "prometheus.labels.chart" . | indent 4 }}
   name: {{ .Release.Namespace }}-prometheus-role
   namespace: {{ .Values.prometheus.alertmanager.namespace }}
 rules:
