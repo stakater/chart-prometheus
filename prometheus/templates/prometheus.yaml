@@ -3,7 +3,7 @@ kind: Prometheus
 metadata:
   annotations:
     configmap.fabric8.io/update-on-change: {{ template "prometheus.name" . }}-k8s-rules
-  name: {{ .Release.Namespace }}-k8s
+  name: {{ .Values.prometheus.prometheusK8s.prometheusName }}
   labels:
     prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
 {{ include "prometheus.labels.stakater" . | indent 4 }}

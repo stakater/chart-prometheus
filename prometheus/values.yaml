@@ -11,6 +11,7 @@ prometheus:
     namespace: monitoring
     # shouldRbacCreate: true     #If deploying prometheus and using alertmanager of other namespace so set this value to true
   prometheusK8s:
+    prometheusName: k8s
     prometheusLabel: monitoring-k8s
     replicas: 2
     externalUrl: http://127.0.0.1:9090
@@ -32,7 +33,6 @@ prometheus:
   clearSecurityContext: false
   service:
     expose: "true"
-    prometheusLabel: monitoring-k8s
     forceSslRedirect: "true"
     ingressClass: internal-ingress
     annotations:

@@ -2,11 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    prometheus: {{ .Values.prometheus.service.prometheusLabel }}
+    prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
     expose: "{{ .Values.prometheus.service.expose }}"
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
-  name: {{ template "prometheus.name" . }}-prometheus-k8s
+  name: prometheus-{{ .Values.prometheus.prometheusK8s.prometheusName }}
   annotations:
     fabric8.io/ingress.annotations: |-
       ingress.kubernetes.io/force-ssl-redirect: "{{ .Values.prometheus.service.forceSslRedirect }}"
@@ -18,5 +18,5 @@ spec:
     protocol: TCP
     targetPort: web
   selector:
-    prometheus: {{ .Values.prometheus.service.prometheusLabel }}
+    prometheus: {{ .Values.prometheus.prometheusK8s.prometheusName }}
     app: prometheus
