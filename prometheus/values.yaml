@@ -11,6 +11,7 @@ prometheus:
     namespace: monitoring
     # shouldRbacCreate: true     #If deploying prometheus and using alertmanager of other namespace so set this value to true
   prometheusK8s:
+  # The prometheusName name is used as label on the Pod made by PO and in the service selector
     prometheusName: k8s
     prometheusLabel: monitoring-k8s
     replicas: 2

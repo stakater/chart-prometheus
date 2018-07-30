@@ -3,8 +3,10 @@ kind: Prometheus
 metadata:
   annotations:
     configmap.fabric8.io/update-on-change: {{ template "prometheus.name" . }}-k8s-rules
+  # The name is used as label on the Pod made by PO
   name: {{ .Values.prometheus.prometheusK8s.prometheusName }}
   labels:
+  # This label is imposed on the Stateful Set made by PO
     prometheus: {{ .Values.prometheus.prometheusK8s.prometheusLabel }}
 {{ include "prometheus.labels.stakater" . | indent 4 }}
 {{ include "prometheus.labels.chart" . | indent 4 }}
