@@ -1,5 +1,8 @@
 prometheus:
   name: monitoring
+  createServicesRBAC:
+    namespaces:      
+      - monitoring      
   labels:
     group: com.stakater.platform
     provider: stakater
@@ -8,8 +11,7 @@ prometheus:
     tag: v2.2.0-rc.0  
   alertmanager:
     name: alertmanager-main
-    namespace: monitoring
-    # shouldRbacCreate: true     #If deploying prometheus and using alertmanager of other namespace so set this value to true
+    namespace: monitoring    # if using alertmanager from any other namespace, add this namespace name in above RBAC, so that prometheus can access this alertmanager
   prometheusK8s:
   # The prometheusName name is used as label on the Pod made by PO and in the service selector
     prometheusName: k8s
