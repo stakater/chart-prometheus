@@ -1,8 +1,5 @@
 prometheus:
-  name: monitoring
-  createServicesRBAC:
-    namespaces:      
-      - monitoring      
+  name: monitoring  
   labels:
     group: com.stakater.platform
     provider: stakater
