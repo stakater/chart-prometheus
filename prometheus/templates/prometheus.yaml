@@ -38,6 +38,18 @@ spec:
       {{- with .memory }}
       memory: {{ . }}
       {{- end }}
+      {{- with .cpu }}
+      cpu: {{ . }}
+      {{- end }}
+    {{- end }}
+    {{- with .limits }}
+    limits:
+      {{- with .memory }}
+      memory: {{ . }}
+      {{- end }}
+      {{- with .cpu }}
+      cpu: {{ . }}
+      {{- end }}
     {{- end }}
   {{- end }}
   retention: {{ .Values.prometheus.prometheusK8s.retention }}
