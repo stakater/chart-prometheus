@@ -8,7 +8,7 @@ prometheus:
     tag: v2.2.0-rc.0  
   alertmanager:
     name: alertmanager-main
-    namespace: monitoring    # if using alertmanager from any other namespace, add this namespace name in above RBAC, so that prometheus can access this alertmanager
+    namespace: monitoring    # if using alertmanager from any other namespace, use name of that namespace
   prometheusK8s:
   # The prometheusName name is used as label on the Pod made by PO and in the service selector
     prometheusName: k8s
@@ -21,9 +21,13 @@ prometheus:
     serviceMonitorExpressions:
       - "{key: k8s-app, operator: Exists}"
     retention: 168h
-    resources:
-      requests:
-        memory: 1Gi
+    # resources:
+    #   requests:
+    #     memory: 1Gi
+    #     cpu: "0.5"
+    #   limits:
+    #     memory: "1.5Gi"
+    #     cpu: "1"
     storage:
       class: ssd
       annotations:
